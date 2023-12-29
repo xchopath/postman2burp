@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 # Send all Postman Collection's endpoints to Burp Suite (History)
 
-if [[ -f .env ]]; then
+echo '  ___          ___     '
+echo ' | _ \        | _ )    '
+echo ' |  _/        | _ \    '
+echo ' |_|OSTMAN TO |___/URP '
+echo ''
+
+if [[ ! -z ${POSTMAN_JSON_FILE} ]] || [[ ! -z ${BURP_PROXY} ]] || [[ ! -z ${URL_HOST} ]] || [[ ! -z ${CUSTOM_HEADERS} ]]; then
+	echo -ne ''
+elif [[ -f .env ]]; then
 	source .env
 else
 	echo "ERROR: Could not read the variables, please read the documentation properly."
+	exit
+fi
+
+if [[ ! -f ${POSTMAN_JSON_FILE} ]]; then
+	echo "ERROR: Could not find Postman File, please configure .env file properly."
 	exit
 fi
 
